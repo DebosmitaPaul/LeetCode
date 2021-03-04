@@ -1,0 +1,61 @@
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace LeetCode_Problem
+{
+    public class ClassA
+    {
+        static int x;
+        static ClassA()
+        {
+            Console.WriteLine("Static ClassA constructor..");
+            x = 10;
+        }
+        public ClassA(int a)
+        {
+            Console.WriteLine("ClassA constructor.."+a);
+            x = x + a;
+            Console.WriteLine($"ClassA constructor..x+a = {x}");
+        }
+        public void Method()
+        {
+            Console.WriteLine("I am in Method..");
+        }
+
+    }
+
+    //static class cannot inherit -> sealed
+    //static variable : a single copy of the variable is created and shared among all objects at the class level. 
+    public static class DemoClass
+    {
+        public static int a;
+        static DemoClass()
+        {
+            //static Constructor: invoked only once... It is invoked during the creation of the first reference
+
+            Console.WriteLine("In DemoClass constructor..");
+
+            a = 10;
+        }
+        public static void Method()
+        {
+            Console.WriteLine($"value of a is {a}");
+        }
+
+    }
+    class Static_ClassDemo
+    {
+        public static void Main_5(string[] args)
+        {
+            ClassA a = new ClassA(2);
+            a.Method();
+            ClassA b = new ClassA(3);
+            b.Method();
+
+            DemoClass.Method();
+            Console.Read();
+        }
+    }
+}
