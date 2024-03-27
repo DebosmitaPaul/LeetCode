@@ -8,27 +8,18 @@ public class SubarrayProduct {
         System.out.println(x);
     }
     public static int numSubarrayProductLessThanK(int[] nums, int k) {
-        List<ArrayList<Integer>> res = new ArrayList<>();
-        subArray(nums,0,res,new ArrayList<Integer>());
-        int count=0;
-        for(List list: res){
-            int multiple=1;
-            for(Object i : list){
-                multiple = multiple * (int)i;// multiple * list.get(i);
+        if(k<=1) return 0;
+        int l = 0;
+        int count =0;
+        int product =1;
+        for(int r=0;r<nums.length;r++){
+            product = product * nums[r];
+            while(product >= k){
+                product=product/nums[l];
+                l++;
             }
-            if(list.size()>0 && multiple<k){
-                System.out.println(list);
-                count++;
-            }
+            count=count+(r-l+1);
         }
         return count;
-    }
-    static void subArray(int[] nums,int index,List<ArrayList<Integer>> res,List<Integer> des){
-        res.add(new ArrayList<>(des));
-        for(int i=index; i<nums.length;i++){
-            des.add(nums[i]);
-            subArray(nums,i+1,res,des);
-            des.remove(des.size()-1);
-        }
     }
 }
