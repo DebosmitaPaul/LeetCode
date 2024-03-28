@@ -1,0 +1,33 @@
+class FirstMissingPositive {
+    public int firstMissingPositive(int[] nums) {
+        int n=nums.length;
+        int contain =0;
+// check 1 present or not
+        for(int i=0; i<n; i++){
+            if(nums[i]==1){
+                contain++;
+                break;
+            }
+        }
+        if(contain==0) return 1;
+// 1 present
+        for(int i=0; i<n; i++){
+            if(nums[i]<=0 || nums[i]>n){
+                nums[i] =1;
+            }
+        }
+// if number is present then mark it.. here we are doing -ve
+        for(int i=0; i<n; i++){
+           int  x = Math.abs(nums[i]);
+            nums[x-1] = -1*Math.abs(nums[x-1]);
+        }
+// iterate thru all -ve if found that is missing.
+        for(int i=0; i<n; i++){
+            if(nums[i]>0){
+                return i+1;
+            }
+        }
+//if all are -ve means no missing number.
+        return n+1;
+    }
+}
