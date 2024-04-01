@@ -1,0 +1,39 @@
+/*
+Input: s = "barfoothefoobarman", words = ["foo","bar"]
+Output: [0,9]
+    0    3   6  9   12  15
+    bar foo the foo bar man
+
+"foo" ->1
+"bar" ->1
+*/
+
+
+class Solution {
+    public List<Integer> findSubstring(String s, String[] words) {
+       List<Integer> res = new ArrayList<>();
+       Map<String,Integer> fmap = new HashMap<>();
+       for(String w : words){
+            fmap.put(w,fmap.getOrDefault(w,0)+1);
+       }
+       Map<String,Integer> cmap = new HashMap<>(fmap);
+       int wordlen = words[0].length();
+       int n = words.length;
+        for(int i=0;i<=s.length()-n*wordlen;i++){
+            for(int j=0; j<n; j++){
+                String str = s.substring(i+j*wordlen,i+j*wordlen+wordlen); // 0-3,3-6
+                if(cmap.containsKey(str) && cmap.get(str)>0){
+                    cmap.put(str,cmap.get(str)-1);
+                }else{
+                    cmap = new HashMap<>(fmap);
+                    break;
+                }
+                if(j == n-1){
+                    res.add(i);
+                    cmap = new HashMap<>(fmap);
+                }
+            }
+        }
+       return res;
+    }
+}
